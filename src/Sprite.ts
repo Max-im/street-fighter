@@ -23,23 +23,17 @@ export class Sprite {
     framesHold: number;
     offset: ICoordinates;
 
-  constructor({
-    position = { x: 0, y: 0 },
-    imgSrc,
-    scale = 1,
-    framesMax = 1,
-    offset = { x: 0, y: 0 }
-  }: ISpriteData) {
-    this.position = position
+  constructor(data: ISpriteData) {
+    this.position = data.position || { x: 0, y: 0 }
     this.width = 50;
     this.height = 150;
-    this.image.src = imgSrc;
-    this.scale = scale;
-    this.framesMax = framesMax;
+    this.image.src = data.imgSrc;
+    this.scale = data.scale || 1;
+    this.framesMax = data.framesMax || 1;
     this.framesCurrent = 0
     this.framesElapsed = 0
     this.framesHold = 5
-    this.offset = offset
+    this.offset = data.offset || { x: 0, y: 0 }
   }
 
   draw(ctx: any) {
