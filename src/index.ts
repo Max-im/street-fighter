@@ -2,6 +2,7 @@ import { Sprite } from './Sprite';
 import { Drawer } from './Drawer';
 import { Game } from './Game';
 import { Fighter } from './Fighter';
+import { Control } from './Control';
 
 import { default as bgImage } from '../images/background.png';
 import { default as shopImage } from '../images/shop.png';
@@ -22,7 +23,7 @@ const shop = new Sprite({
   scale: 2,
   framesMax: 6
 })
-const background = new Sprite({ imgSrc: bgImage })
+const background = new Sprite({ imgSrc: bgImage });
 
 const sprites = [background, shop]
 
@@ -35,13 +36,13 @@ const data = {
   offset: { x: 215, y: 157 },
   color: 'red',
   sprites: {
-    idle: { imgSrc: mackIdle, framesMax: 8 },
-    run: { imgSrc: mackRun, framesMax: 8 },
-    jump: { imgSrc: mackJump, framesMax: 2 },
-    fall: { imgSrc: mackFall, framesMax: 2 },
-    attack1: { imgSrc: mackAtack, framesMax: 6 },
-    takeHit: { imgSrc: mackTakeHit, framesMax: 4 },
-    death: { imgSrc: mackDeath, framesMax: 6 }
+    idle: new Sprite({ imgSrc: mackIdle, framesMax: 8 }),
+    run: new Sprite({ imgSrc: mackRun, framesMax: 8 }),
+    jump: new Sprite({ imgSrc: mackJump, framesMax: 2 }),
+    fall: new Sprite({ imgSrc: mackFall, framesMax: 2 }),
+    attack1: new Sprite({ imgSrc: mackAtack, framesMax: 6 }),
+    takeHit: new Sprite({ imgSrc: mackTakeHit, framesMax: 4 }),
+    death: new Sprite({ imgSrc: mackDeath, framesMax: 6 })
   },
   attackBox: {
     offset: { x: 100, y: 50 },
@@ -51,7 +52,9 @@ const data = {
 }
 
 const firstFighter = new Fighter(data);
-const secondFighter = new Fighter(data)
+const secondFighter = new Fighter(data);
+new Control(firstFighter, {left: 'a', right: 'd', up: 'w', attack: ' '});
+new Control(secondFighter, {left: 'j', right: 'l', up: 'o', attack: 'Enter'});
 
 const game = new Game({
   firstFighter,
@@ -60,4 +63,4 @@ const game = new Game({
   drawer
 })
 
-game.animate()
+game.animate();
