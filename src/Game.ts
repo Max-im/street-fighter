@@ -29,5 +29,6 @@ export class Game implements IGameData{
         this.sprites.forEach(sprite => {
             sprite.update(this.drawer.ctx);
         });
+        this.firstFighter.update(this.drawer.ctx);
     }
 }
