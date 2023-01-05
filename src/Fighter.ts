@@ -8,7 +8,6 @@ interface IFighterData {
   framesMax: number
   scale: number
   offset: ICoordinates
-  color: string
   sprites: {
     idle: Sprite;
     run: Sprite;
@@ -39,7 +38,6 @@ export class Fighter extends Sprite {
   public health: number
   public dead: boolean
   public isAttacking: boolean
-  public color: string
   public sprites: { [key: string]: Sprite };
   public control: Control | undefined;
 
@@ -65,7 +63,6 @@ export class Fighter extends Sprite {
     this.framesElapsed = 0;
     this.framesHold = 5;
     this.dead = false;
-    this.color = data.color;
     this.isAttacking = false;
     this.sprites = data.sprites;
   }
@@ -155,7 +152,7 @@ export class Fighter extends Sprite {
 
   update(ctx: any) {
     this.draw(ctx);
-    if (!this.dead) this.animateFrames()
+    if (!this.dead) this.animateFrames();
 
     // attack boxes
     this.attackBox.position.x = this.position.x + this.attackBox.offset.x

@@ -34,15 +34,28 @@ export class Game implements IGameData {
       throw new Error('Control not provided')
 
     this.firstFighter.velocity.x = 0;
+    this.secondFighter.velocity.x = 0;
+
     if (this.firstFighter.control.move.right.pressed) {
-      this.firstFighter.velocity.x = +5
-      this.firstFighter.switchSprite('run')
+      this.firstFighter.velocity.x = +5;
+      this.firstFighter.switchSprite('run');
     } else if (this.firstFighter.control.move.left.pressed) {
-      this.firstFighter.velocity.x = -5
-      this.firstFighter.switchSprite('run')
+      this.firstFighter.velocity.x = -5;
+      this.firstFighter.switchSprite('run');
     } else {
-      this.firstFighter.switchSprite('idle')
+      this.firstFighter.switchSprite('idle');
     }
-    this.firstFighter.update(this.drawer.ctx)
+    this.firstFighter.update(this.drawer.ctx);
+
+    if (this.secondFighter.control.move.right.pressed) {
+      this.secondFighter.velocity.x = +5;
+      this.secondFighter.switchSprite('run');
+    } else if (this.secondFighter.control.move.left.pressed) {
+      this.secondFighter.velocity.x = -5;
+      this.secondFighter.switchSprite('run');
+    } else {
+      this.secondFighter.switchSprite('idle');
+    }
+    this.secondFighter.update(this.drawer.ctx);
   }
 }
