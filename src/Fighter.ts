@@ -1,5 +1,6 @@
 import { Control } from './Control';
-import { ICoordinates, Sprite } from './Sprite';
+import { Game, Mediator } from './Game';
+import { ICoordinates, ISpriteData, Sprite } from './Sprite';
 
 interface IFighterData {
   position: ICoordinates
@@ -24,9 +25,21 @@ interface IFighterData {
   }
 }
 
-type FightersType = 'mack' | 'kenji'
 
-export class Fighter extends Sprite {
+class FighterComponent extends Sprite {
+  protected mediator: Mediator;
+
+  constructor(spriteData: ISpriteData, mediator?: Mediator) {
+      super(spriteData);
+      this.mediator = mediator!;
+  }
+
+  public setMediator(mediator: Mediator): void {
+      this.mediator = mediator;
+  }
+}
+
+export class Fighter extends FighterComponent {
   public velocity: ICoordinates
   public attackBox: {
     position: ICoordinates
@@ -70,6 +83,15 @@ export class Fighter extends Sprite {
   attack() {
     this.switchSprite('attack1');
     this.isAttacking = true;
+    this.mediator.notify(this, {type: 'attack', payload: ''});
+  }
+
+  takeHit() {
+    this.health -= 20
+
+    if (this.health <= 0) {
+      this.switchSprite('death')
+    } else this.switchSprite('takeHit')
   }
 
   switchSprite(sprite: string) {

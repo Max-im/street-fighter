@@ -3,7 +3,7 @@ export interface ICoordinates {
   y: number
 }
 
-interface ISpriteData {
+export interface ISpriteData {
   position?: ICoordinates
   imgSrc: string;
   scale?: number
