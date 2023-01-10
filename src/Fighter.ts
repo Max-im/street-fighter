@@ -7,6 +7,7 @@ interface IFighterData {
   position: ICoordinates
   velocity: ICoordinates
   imgSrc: string
+  name: string
   framesMax: number
   attackFrame: number
   scale: number
@@ -50,6 +51,7 @@ export class Fighter extends FighterComponent {
     height: number
   }
   public lastKey: undefined | string;
+  public name: string;
   public health: HealthLine;
   public dead: boolean
   public sprites: { [key: string]: Sprite };
@@ -75,7 +77,8 @@ export class Fighter extends FighterComponent {
       width: data.attackBox.width,
       height: data.attackBox.height
     };
-    this.health = new HealthLine(data.fighterNum);
+    this.name = data.name;
+    this.health = new HealthLine(data.fighterNum, this);
     this.framesCurrent = 0;
     this.framesElapsed = 0;
     this.framesHold = 5;

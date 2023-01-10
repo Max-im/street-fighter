@@ -18,6 +18,7 @@ const mackData = {
     offset: { x: 215, y: 157 },
     attackFrame: 4,
     fighterNum: 1,
+    name: 'Mack',
     sprites: {
       idle: new Sprite({ imgSrc: mackIdle, framesMax: 8 }),
       run: new Sprite({ imgSrc: mackRun, framesMax: 8 }),
