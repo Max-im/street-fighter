@@ -1,5 +1,6 @@
 import { Control } from './Control';
 import { Mediator } from './Game';
+import { HealthLine } from './HealthLine';
 import { ICoordinates, ISpriteData, Sprite } from './Sprite';
 
 interface IFighterData {
@@ -10,6 +11,7 @@ interface IFighterData {
   attackFrame: number
   scale: number
   offset: ICoordinates
+  fighterNum: 1 | 2,
   sprites: {
     idle: Sprite;
     run: Sprite;
@@ -48,7 +50,7 @@ export class Fighter extends FighterComponent {
     height: number
   }
   public lastKey: undefined | string;
-  public health: number
+  public health: HealthLine;
   public dead: boolean
   public sprites: { [key: string]: Sprite };
   public control: Control | undefined;
@@ -73,7 +75,7 @@ export class Fighter extends FighterComponent {
       width: data.attackBox.width,
       height: data.attackBox.height
     };
-    this.health = 100;
+    this.health = new HealthLine(data.fighterNum);
     this.framesCurrent = 0;
     this.framesElapsed = 0;
     this.framesHold = 5;
@@ -125,9 +127,9 @@ export class Fighter extends FighterComponent {
   }
 
   takeHit() {
-    this.health -= 20
+    this.health.minusHealth(20);
 
-    if (this.health <= 0) return this.kill();
+    if (!this.health.hasHealth()) return this.kill();
     this.setSpriteState(this.sprites.takeHit);
   }
 
@@ -140,8 +142,10 @@ export class Fighter extends FighterComponent {
     this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
     this.attackBox.position.y = this.position.y + this.attackBox.offset.y;
 
-    this.position.x += this.velocity.x
-    this.position.y += this.velocity.y
+    this.position.x += this.velocity.x;
+    this.position.y += this.velocity.y;
+
+    this.health.update(ctx);
 
     // gravity function
     if (this.position.y + this.height + this.velocity.y >= 567 - 96) {
