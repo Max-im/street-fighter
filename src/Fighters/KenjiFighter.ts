@@ -17,7 +17,7 @@ const kenjiData = {
   scale: 2.5,
   offset: { x: 215, y: 170 },
   attackFrame: 1,
-  fighterNum: 2,
+  fighterNum: 2 as 1 | 2,
   name: 'Kenji',
   sprites: {
     idle: new Sprite({ imgSrc: kenjiIdle, framesMax: 4 }),

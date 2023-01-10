@@ -59,6 +59,7 @@ export class Fighter extends FighterComponent {
   public gravity = 0.7;
   public attackFrame: number;
   private killed = false;
+  public fighterNum: 1 | 2;
 
   constructor(data: IFighterData) {
     super({
@@ -78,7 +79,8 @@ export class Fighter extends FighterComponent {
       height: data.attackBox.height
     };
     this.name = data.name;
-    this.health = new HealthLine(data.fighterNum, this);
+    this.fighterNum = data.fighterNum;
+    this.health = new HealthLine(this);
     this.framesCurrent = 0;
     this.framesElapsed = 0;
     this.framesHold = 5;
