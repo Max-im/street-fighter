@@ -55,9 +55,9 @@ export class Sprite {
 
     if (this.framesElapsed % this.framesHold === 0) {
       if (this.framesCurrent < this.framesMax - 1) {
-        this.framesCurrent++
+        this.framesCurrent++;
       } else {
-        this.framesCurrent = 0
+        this.framesCurrent = 0;
       }
     }
   }

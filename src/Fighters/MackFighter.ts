@@ -16,6 +16,7 @@ const mackData = {
     framesMax: 8,
     scale: 2.5,
     offset: { x: 215, y: 157 },
+    attackFrame: 4,
     sprites: {
       idle: new Sprite({ imgSrc: mackIdle, framesMax: 8 }),
       run: new Sprite({ imgSrc: mackRun, framesMax: 8 }),

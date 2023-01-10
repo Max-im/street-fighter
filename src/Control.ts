@@ -8,12 +8,8 @@ interface IMovementMap {
 }
 
 export class Control {
-  public move = {
-    left: { pressed: false },
-    right: { pressed: false }, 
-    up: { pressed: false }, 
-    attack: { pressed: false }, 
-  }
+  public canAttack = true;
+  public isJumped = false;
 
   constructor(public fighter: Fighter, public movementMap: IMovementMap) {
     fighter.control = this;
@@ -25,9 +21,9 @@ export class Control {
     if (this.fighter.dead) return;
 
     if (event.key === this.movementMap.left) {
-      this.move.left.pressed = false;
+      this.fighter.stop();
     } else if (event.key === this.movementMap.right) {
-      this.move.right.pressed = false;
+      this.fighter.stop();
     }
   }
 
@@ -35,15 +31,15 @@ export class Control {
     if (this.fighter.dead) return;
 
     if (event.key === this.movementMap.left) {
-      this.move.left.pressed = true;
-      this.fighter.lastKey = this.movementMap.left;
+      this.fighter.moveBack();
     } else if (event.key === this.movementMap.right) {
-      this.move.right.pressed = true;
-      this.fighter.lastKey = this.movementMap.right;
-    } else if (event.key === this.movementMap.up) {
-      this.fighter.velocity.y = -20
-    } else if (event.key === this.movementMap.attack) {
+      this.fighter.move();
+    } else if (event.key === this.movementMap.up && !this.isJumped) {
+      this.fighter.jump();
+      this.isJumped = true;
+    } else if (event.key === this.movementMap.attack && this.canAttack) {
       this.fighter.attack();
+      this.canAttack = false;
     }
   }
 }

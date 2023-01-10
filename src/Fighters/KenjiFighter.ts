@@ -10,12 +10,13 @@ import { default as kenjiTakeHit } from '../../images/kenji/TakeHit.png'
 import { default as kenjiDeath } from '../../images/kenji/Death.png';
 
 const kenjiData = {
-  position: { x: 750, y: 320 },
+  position: { x: 750, y: 335 },
   velocity: { x: 0, y: 0 },
   imgSrc: kenjiIdle,
   framesMax: 4,
   scale: 2.5,
-  offset: { x: 215, y: 157 },
+  offset: { x: 215, y: 170 },
+  attackFrame: 1,
   sprites: {
     idle: new Sprite({ imgSrc: kenjiIdle, framesMax: 4 }),
     run: new Sprite({ imgSrc: kenjiRun, framesMax: 8 }),
