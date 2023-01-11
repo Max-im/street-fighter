@@ -1,6 +1,8 @@
 import { Control } from './Control';
 import { Mediator } from './Game';
-import { HealthLine } from './HealthLine';
+import { Health } from './Health/Health';
+import { LeftHealth } from './Health/LeftHealth';
+import { RightHealth } from './Health/RightHealth';
 import { ICoordinates, ISpriteData, Sprite } from './Sprite';
 
 interface IFighterData {
@@ -52,7 +54,7 @@ export class Fighter extends FighterComponent {
   }
   public lastKey: undefined | string;
   public name: string;
-  public health: HealthLine;
+  public health: Health;
   public dead: boolean
   public sprites: { [key: string]: Sprite };
   public control: Control | undefined;
@@ -80,7 +82,7 @@ export class Fighter extends FighterComponent {
     };
     this.name = data.name;
     this.fighterNum = data.fighterNum;
-    this.health = new HealthLine(this);
+    this.health = data.fighterNum === 1 ? new LeftHealth(this) : new RightHealth(this);
     this.framesCurrent = 0;
     this.framesElapsed = 0;
     this.framesHold = 5;

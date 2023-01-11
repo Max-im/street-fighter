@@ -1,6 +1,7 @@
 import { Drawer } from './Drawer';
 import { Fighter } from './Fighter';
 import { Sprite } from './Sprite';
+import { Timer } from './Timer';
 
 export interface IGameData {
   firstFighter: Fighter;
@@ -22,6 +23,7 @@ export class Game implements IGameData, Mediator {
   secondFighter: Fighter;
   drawer: Drawer;
   sprites: Sprite[];
+  timer: Timer;
 
   constructor(gameData: IGameData) {
     this.firstFighter = gameData.firstFighter;
@@ -30,6 +32,7 @@ export class Game implements IGameData, Mediator {
     this.secondFighter.setMediator(this);
     this.drawer = gameData.drawer;
     this.sprites = gameData.sprites;
+    this.timer = new Timer();
   }
 
   private activeAttackCollision() : boolean {
@@ -47,11 +50,8 @@ export class Game implements IGameData, Mediator {
   notify(sender: Fighter, event: INotification): void {
     if (event.type === 'attack') {
       const receiver = sender === this.firstFighter ? this.secondFighter : this.firstFighter;
-      if (this.activeAttackCollision()) {
-        receiver.takeHit();
-      }
+      if (this.activeAttackCollision()) receiver.takeHit();
     } else if (event.type === 'dead') {
-console.log('dead')
     }
   }
 
