@@ -1,15 +1,15 @@
 {
-  "name": "arena",
+  "name": "street-fighter",
   "version": "1.0.0",
-  "description": "",
+  "description": "Fighting Game with TypeScript and HTML canvas",
   "main": "index.js",
   "scripts": {
     "dev": "npx parcel index.html",
     "build": "npx parcel build index.html",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "publish": "npx gh-pages -d dist"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["game", "canvas", "typescript", "parcel"],
+  "author": "<pogidaevmo@gmail.com> Maksym Pozhydaiev",
   "license": "ISC",
   "devDependencies": {
     "parcel-bundler": "^1.12.5",
