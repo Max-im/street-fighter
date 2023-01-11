@@ -11,12 +11,13 @@ export interface IGameData {
 }
 
 interface INotification {
-  type: 'attack' | 'dead',
+  type: 'attack' | 'dead' | 'timeLeft',
   payload: any
 }
 
 export interface Mediator {
   notify(sender: Fighter, event: INotification): void;
+  active: boolean;
 }
 export class Game implements IGameData, Mediator {
   firstFighter: Fighter;
@@ -24,6 +25,7 @@ export class Game implements IGameData, Mediator {
   drawer: Drawer;
   sprites: Sprite[];
   timer: Timer;
+  active = true;
 
   constructor(gameData: IGameData) {
     this.firstFighter = gameData.firstFighter;
@@ -32,7 +34,7 @@ export class Game implements IGameData, Mediator {
     this.secondFighter.setMediator(this);
     this.drawer = gameData.drawer;
     this.sprites = gameData.sprites;
-    this.timer = new Timer();
+    this.timer = new Timer(this);
   }
 
   private activeAttackCollision() : boolean {
@@ -47,11 +49,30 @@ export class Game implements IGameData, Mediator {
     )
   }
 
-  notify(sender: Fighter, event: INotification): void {
+  notify(sender: Fighter | undefined, event: INotification): void {
     if (event.type === 'attack') {
       const receiver = sender === this.firstFighter ? this.secondFighter : this.firstFighter;
       if (this.activeAttackCollision()) receiver.takeHit();
     } else if (event.type === 'dead') {
+      this.active = false;
+      this.timer.stopTimer();
+      const winner = sender === this.firstFighter ? this.secondFighter : this.firstFighter;
+      this.showResultMessage(`${winner.name} WIN!`);
+    } else if (event.type === 'timeLeft') {
+      this.active = false;
+      const firstFighterHealth = this.firstFighter.health.getHealth();
+      const secondFighterHealth = this.secondFighter.health.getHealth();
+
+      let message = 'Draw!';
+      if (firstFighterHealth > secondFighterHealth) {
+        message =`${this.firstFighter.name} WIN!`;
+        this.secondFighter.kill();
+      }
+      else if(firstFighterHealth < secondFighterHealth) {
+        message =`${this.secondFighter.name} WIN!`;
+        this.firstFighter.kill();
+      }
+      this.showResultMessage(message);
     }
   }
 
@@ -68,5 +89,16 @@ export class Game implements IGameData, Mediator {
 
     this.firstFighter.update(this.drawer.ctx);
     this.secondFighter.update(this.drawer.ctx);
+
+    this.timer.update(this.drawer.ctx);
+  }
+
+  private showResultMessage(msg: string) {
+    const ctx = this.drawer.ctx;
+    ctx.fillStyle = "#000000";
+    ctx.font="50px Georgia";
+
+    const textSwitch = 1024 / 2 - msg.length * 15 / 2;
+    ctx.fillText(msg, textSwitch, 567 / 2, 100);
   }
 }

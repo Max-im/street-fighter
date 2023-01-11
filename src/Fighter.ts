@@ -90,6 +90,9 @@ export class Fighter extends FighterComponent {
     this.dead = false;
     this.sprites = data.sprites;
   }
+  private disabled(): boolean {
+    return this.dead || this.killed || !this.mediator.active!
+  }
 
   private setSpriteState(sprite: Sprite) {
     this.image = sprite.image;
@@ -98,30 +101,30 @@ export class Fighter extends FighterComponent {
   }
 
   move() {
-    if (this.dead || this.killed) return;
+    if (this.disabled()) return;
     this.setSpriteState(this.sprites.run);
     this.velocity.x = +5;
   }
   
   moveBack() {
-    if (this.dead || this.killed) return;
+    if (this.disabled()) return;
     this.setSpriteState(this.sprites.run);
     this.velocity.x = -5;
   }
   
   stop() {
-    if (this.dead || this.killed) return;
+    if (this.disabled()) return;
     this.setSpriteState(this.sprites.idle);
     this.velocity.x = 0;
   }
 
   attack() {
-    if (this.dead || this.killed) return;
+    if (this.disabled()) return;
     this.setSpriteState(this.sprites.attack1);
   }
   
   jump() {
-    if (this.dead || this.killed) return;
+    if (this.disabled()) return;
     this.setSpriteState(this.sprites.jump);
     this.velocity.y = -20;
   }
