@@ -2,10 +2,12 @@
 
 ## Fighting Game with TypeScript and HTML canvas
 
-
 ## Tech
 - TypeScript
 - Canvas
+
+## Play now:
+[Play](https://max-im.github.io/street-fighter)
 
 ## Running:
 - clone the repo
